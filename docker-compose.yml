@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: chat-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: chatdb
+      MYSQL_USER: chatuser
+      MYSQL_PASSWORD: chatpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chat-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=mysql://chatuser:chatpassword@db:3306/chatdb
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: chat-frontend
+    ports:
+      - "3001:3001"
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:3000
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:
