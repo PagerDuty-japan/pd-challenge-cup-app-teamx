@@ -16,7 +16,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: teamx-app.pdcc.paas.jp
+  - host: teamx-app-backend.pdcc.paas.jp
     http:
       paths:
       - path: /api
