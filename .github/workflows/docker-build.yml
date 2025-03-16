@@ -19,7 +19,10 @@ jobs:
   build-frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.modified, 'frontend/') || contains(github.event.head_commit.added, 'frontend/')
+    if: >-
+      contains(toJSON(github.event.head_commit.modified), 'frontend/') ||
+      contains(toJSON(github.event.head_commit.added), 'frontend/') ||
+      contains(toJSON(github.event.head_commit.removed), 'frontend/')
 
     steps:
       - name: Checkout repository
@@ -50,8 +53,10 @@ jobs:
   build-backend:
     name: Build Backend
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.modified, 'backend/') || contains(github.event.head_commit.added, 'backend/')
-
+    if: >-
+      contains(toJSON(github.event.head_commit.modified), 'backend/') ||
+      contains(toJSON(github.event.head_commit.added), 'backend/') ||
+      contains(toJSON(github.event.head_commit.removed), 'backend/')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
