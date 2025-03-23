@@ -14,7 +14,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: common
     alb.ingress.kubernetes.io/group.order: '110'
     # WebSocket対応の設定
-    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.type=app_cookie
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.type=app_cookie,stickiness.app_cookie.cookie_name=AWSALB_SESSION
     alb.ingress.kubernetes.io/websocket-protocol: 'true'
 spec:
   ingressClassName: alb

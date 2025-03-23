@@ -32,8 +32,6 @@ spec:
           value: "true"
         - name: NODE_ENV
           value: "production"
-        - name: SESSION_COOKIE_NAME
-          value: "teamx_session"
         resources:
           limits:
             cpu: "500m"
