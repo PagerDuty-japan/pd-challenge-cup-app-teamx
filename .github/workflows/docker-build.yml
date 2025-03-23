@@ -3,10 +3,10 @@ name: Docker Build and Push
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
-      - '.github/workflows/**'
+    # paths:
+    #   - 'frontend/**'
+    #   - 'backend/**'
+    #   - '.github/workflows/**'
 
 env:
   AWS_REGION: ap-northeast-1
