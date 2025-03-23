@@ -39,6 +39,11 @@ data "aws_security_group" "eks" {
   vpc_id = data.aws_vpc.existing.id
 }
 
+// データソース - EKSクラスターのセキュリティグループ
+data "aws_eks_cluster" "cluster_sg" {
+  name = "challenge-cup-cluster"
+}
+
 // RDS MySQL Subnet Group
 resource "aws_db_subnet_group" "mysql" {
   name       = "challenge-cup-mysql-subnet-group"
@@ -59,7 +64,7 @@ resource "aws_security_group" "rds_access" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [data.aws_security_group.eks.id]
+    security_groups = [data.aws_security_group.eks.id, data.aws_eks_cluster.cluster_sg.vpc_config[0].cluster_security_group_id]
   }
 
   egress {

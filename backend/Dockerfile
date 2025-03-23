@@ -23,4 +23,4 @@ EXPOSE 3000
 ENV PORT=3000
 
 # アプリケーションを起動（ホストバインディングを設定）
-CMD ["npm", "run", "dev", "--", "--hostname", "0.0.0.0"]
+CMD ["npm", "run", "start", "--", "--hostname", "0.0.0.0"]
