@@ -38,11 +38,14 @@ export default function ChatComponent() {
           reconnectionAttempts: 5,
           reconnectionDelay: 1000,
           autoConnect: true,
-          timeout: 45000,
+          timeout: 60000,
           forceNew: true,
           upgrade: true,
           rememberUpgrade: true,
-          secure: window.location.protocol === 'https:'
+          secure: window.location.protocol === 'https:',
+          // 接続エラー時のリトライ設定
+          reconnection: true,
+          reconnectionDelayMax: 10000
         });
 
         socket.on('connect_error', (error) => {

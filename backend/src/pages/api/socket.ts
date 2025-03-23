@@ -15,7 +15,12 @@ export type NextApiResponseWithSocket = NextApiResponse & {
 
 const SocketHandler = async (req: NextApiRequest, res: NextApiResponseWithSocket) => {
   // CORSヘッダーを設定
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+  const origin = req.headers.origin || '';
+  const allowedOrigins = ['http://localhost:3001', 'https://teamx-app.pdcc.paas.jp'];
+  
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -40,7 +45,7 @@ const SocketHandler = async (req: NextApiRequest, res: NextApiResponseWithSocket
     const io = new SocketIOServer(res.socket.server, {
       path: '/api/socket',
       cors: {
-        origin: 'http://localhost:3001',
+        origin: ['http://localhost:3001', 'https://teamx-app.pdcc.paas.jp'],
         methods: ['GET', 'POST', 'OPTIONS'],
         credentials: true,
         allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
