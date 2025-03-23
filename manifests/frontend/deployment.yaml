@@ -23,8 +23,6 @@ spec:
         env:
         - name: PORT
           value: "3001"
-        - name: NEXT_PUBLIC_BACKEND_URL
-          value: "https://teamx-app-backend.pdcc.paas.jp"
         resources:
           limits:
             cpu: "500m"

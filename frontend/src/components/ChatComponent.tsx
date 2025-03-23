@@ -31,7 +31,8 @@ export default function ChatComponent() {
         }
 
         // Socket.IOクライアントを設定（相対パスを使用）
-        socket = io({
+        // Socket.IOの設定
+        const socketOptions = {
           path: '/api/socket',
           withCredentials: true,
           transports: ['polling', 'websocket'],
@@ -46,7 +47,9 @@ export default function ChatComponent() {
           // 接続エラー時のリトライ設定
           reconnection: true,
           reconnectionDelayMax: 10000
-        });
+        };
+        
+        socket = io(socketOptions);
 
         socket.on('connect_error', (error) => {
           console.error('Connection error:', error);
