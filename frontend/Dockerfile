@@ -13,6 +13,9 @@ RUN npm install
 # ソースコードをコピー
 COPY . .
 
+# New Relic設定ファイルをコピー
+COPY newrelic.js ./
+
 # アプリケーションをビルド
 RUN npm run build
 
@@ -37,6 +40,11 @@ EXPOSE 3001
 
 # 環境変数を設定
 ENV PORT=3001
+ENV NODE_ENV=production
+# New Relic環境変数はKubernetesマニフェストで設定されます
+
+# New Relic設定ファイルをコピー
+COPY --from=builder /app/newrelic.js ./
 
 # ビルドされたアプリケーションを起動
 CMD ["npm", "run", "start", "--", "-p", "3001"]

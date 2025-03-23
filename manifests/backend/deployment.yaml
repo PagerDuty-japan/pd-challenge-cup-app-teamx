@@ -27,6 +27,17 @@ spec:
               key: url
         - name: NODE_ENV
           value: "production"
+        - name: NEW_RELIC_APP_NAME_BACKEND
+          value: "Challenge Cup Backend"
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: newrelic-backend-secrets
+              key: license_key
+        - name: NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+          value: "true"
+        - name: NEW_RELIC_LOG_LEVEL
+          value: "info"
       containers:
       - name: backend
         image: 205930621170.dkr.ecr.ap-northeast-1.amazonaws.com/challenge-cup-backend-teamx:latest
@@ -44,6 +55,17 @@ spec:
           value: "true"
         - name: NODE_ENV
           value: "production"
+        - name: NEW_RELIC_APP_NAME_BACKEND
+          value: "Challenge Cup Backend"
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: newrelic-backend-secrets
+              key: license_key
+        - name: NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+          value: "true"
+        - name: NEW_RELIC_LOG_LEVEL
+          value: "info"
         resources:
           limits:
             cpu: "500m"

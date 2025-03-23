@@ -23,6 +23,24 @@ spec:
         env:
         - name: PORT
           value: "3001"
+        - name: NODE_ENV
+          value: "production"
+        - name: NEW_RELIC_APP_NAME_FRONTEND
+          value: "Challenge Cup Frontend"
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: newrelic-frontend-secrets
+              key: license_key
+        - name: NEW_RELIC_BROWSER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: newrelic-frontend-secrets
+              key: browser_key
+        - name: NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+          value: "true"
+        - name: NEW_RELIC_LOG_LEVEL
+          value: "info"
         resources:
           limits:
             cpu: "500m"

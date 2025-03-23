@@ -25,3 +25,11 @@ terraform.rc
 
 # Ignore lock files
 .terraform.lock.*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# New Relic
+newrelic_agent.log
