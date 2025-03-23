@@ -28,6 +28,10 @@ spec:
             secretKeyRef:
               name: database-credentials
               key: url
+        - name: PRISMA_LOG_QUERIES
+          value: "true"
+        - name: NODE_ENV
+          value: "production"
         resources:
           limits:
             cpu: "500m"
