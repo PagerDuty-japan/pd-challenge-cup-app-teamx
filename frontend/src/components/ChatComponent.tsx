@@ -14,12 +14,11 @@ export default function ChatComponent() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    // WebSocketサーバーに接続
-    const url = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000';
+    // WebSocketサーバーに接続（相対パスを使用）
     const initSocket = async () => {
       try {
         // WebSocketサーバーを初期化
-        const response = await fetch(`${url}/api/socket`, {
+        const response = await fetch('/api/socket', {
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -31,8 +30,8 @@ export default function ChatComponent() {
           throw new Error('Failed to initialize WebSocket server');
         }
 
-        // Socket.IOクライアントを設定
-        socket = io(url, {
+        // Socket.IOクライアントを設定（相対パスを使用）
+        socket = io({
           path: '/api/socket',
           withCredentials: true,
           transports: ['polling', 'websocket'],
@@ -43,11 +42,7 @@ export default function ChatComponent() {
           forceNew: true,
           upgrade: true,
           rememberUpgrade: true,
-          secure: false,
-          rejectUnauthorized: false,
-          extraHeaders: {
-            'Access-Control-Allow-Origin': 'http://localhost:3001'
-          }
+          secure: window.location.protocol === 'https:'
         });
 
         socket.on('connect_error', (error) => {

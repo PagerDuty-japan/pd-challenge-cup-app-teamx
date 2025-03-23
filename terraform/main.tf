@@ -131,7 +131,7 @@ output "database_username" {
 // Kubernetes Secret for Database Credentials
 resource "kubernetes_secret" "database_credentials" {
   metadata {
-    name      = "database-credentials-${var.team_name}"
+    name      = "database-credentials"
     namespace = var.team_name
   }
 
