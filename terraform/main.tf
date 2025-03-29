@@ -95,7 +95,6 @@ resource "aws_security_group" "rds_access" {
   }
 }
 
-// RDS MySQL Instance
 resource "aws_db_instance" "mysql" {
   allocated_storage      = 20
   engine                 = "mysql"
