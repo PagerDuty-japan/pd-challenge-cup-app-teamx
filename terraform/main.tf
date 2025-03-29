@@ -1,4 +1,20 @@
-// Provider configuration
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  cloud {
+    organization = "kusama"
+
+    workspaces {
+      name = "pd-challenge-cup-app-teamx"
+      project = "PagerDuty Challenge Cup"
+    }
+  }
+  required_version = ">= 1.2.0"
+}
 provider "aws" {
   region = "ap-northeast-1"
 }
