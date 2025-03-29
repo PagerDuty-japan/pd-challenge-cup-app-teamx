@@ -4,7 +4,7 @@ apiVersion: monitoring.newrelic.com/v1alpha1
 kind: AlertPolicy
 metadata:
   name: challenge-cup-backend-alerts
-  namespace: teamx
+  namespace: newrelic
 spec:
   name: "Challenge Cup Backend Alerts"
   incidentPreference: "PER_CONDITION"
@@ -13,7 +13,7 @@ spec:
       valueFrom:
         secretKeyRef:
           name: pagerduty-secrets
-          key: backend-integration-key
+          key: backend_integration_key
   conditions:
     - name: "Database Error Rate"
       type: "apm_app_metric"
