@@ -3,4 +3,4 @@ data:
   name: teamx
 kind: ConfigMap
 metadata:
-  name: team
+  name: team-frontend

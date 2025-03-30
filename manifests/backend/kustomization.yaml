@@ -8,7 +8,7 @@ resources:
 replacements:
   - source:
       kind: ConfigMap
-      name: team
+      name: team-backend
       fieldPath: data.name
     targets:
       - select:
@@ -21,7 +21,3 @@ replacements:
           name: backend
         fieldPaths:
           - metadata.namespace
-images:
-  - name: BACKEND_IMAGE
-    newName: 205930621170.dkr.ecr.ap-northeast-1.amazonaws.com/challenge-cup-backend-teamx
-    newTag: latest
