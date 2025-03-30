@@ -95,5 +95,3 @@ jobs:
             NEW_RELIC_APP_NAME_BACKEND=${{ secrets.NEW_RELIC_APP_NAME_BACKEND }}
             NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}
             NEW_RELIC_BROWSER_KEY=${{ secrets.NEW_RELIC_BROWSER_KEY }}
-
-
