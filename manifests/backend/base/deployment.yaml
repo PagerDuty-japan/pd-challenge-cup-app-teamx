@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: teamx
+  namespace: $(TEAM_NAME)
   labels:
     app: backend
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       initContainers:
       - name: db-migration
-        image: 205930621170.dkr.ecr.ap-northeast-1.amazonaws.com/challenge-cup-backend-teamx:latest
+        image: 205930621170.dkr.ecr.ap-northeast-1.amazonaws.com/challenge-cup-backend-$(TEAM_NAME):latest
         command: ["npx", "prisma", "migrate", "deploy"]
         env:
         - name: DATABASE_URL
@@ -40,7 +40,7 @@ spec:
           value: "info"
       containers:
       - name: backend
-        image: 205930621170.dkr.ecr.ap-northeast-1.amazonaws.com/challenge-cup-backend-teamx:latest
+        image: 205930621170.dkr.ecr.ap-northeast-1.amazonaws.com/challenge-cup-backend-$(TEAM_NAME):latest
         ports:
         - containerPort: 3000
         env:
