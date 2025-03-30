@@ -11,10 +11,6 @@ on:
 env:
   AWS_REGION: ap-northeast-1
   TEAM_NAME: teamx
-  NEW_RELIC_APP_NAME_FRONTEND: ${{ secrets.NEW_RELIC_APP_NAME_FRONTEND }}
-  NEW_RELIC_APP_NAME_BACKEND: ${{ secrets.NEW_RELIC_APP_NAME_BACKEND }}
-  NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-  NEW_RELIC_BROWSER_KEY: ${{ secrets.NEW_RELIC_BROWSER_KEY }}
 
 permissions:
   id-token: write
@@ -44,6 +40,9 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: challenge-cup-frontend-${{ env.TEAM_NAME }}
           IMAGE_TAG: ${{ github.sha }}
+          NEW_RELIC_APP_NAME_FRONTEND: ${{ secrets.NEW_RELIC_APP_NAME_FRONTEND }}
+          NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+          NEW_RELIC_BROWSER_KEY: ${{ secrets.NEW_RELIC_BROWSER_KEY }}
         working-directory: ./frontend
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -73,6 +72,9 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: challenge-cup-backend-${{ env.TEAM_NAME }}
           IMAGE_TAG: ${{ github.sha }}
+          NEW_RELIC_APP_NAME_BACKEND: ${{ secrets.NEW_RELIC_APP_NAME_BACKEND }}
+          NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+          NEW_RELIC_BROWSER_KEY: ${{ secrets.NEW_RELIC_BROWSER_KEY }}
         working-directory: ./backend
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
