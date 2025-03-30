@@ -80,8 +80,8 @@ resource "aws_security_group" "rds_access" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    #security_groups = [data.aws_security_group.eks.id, data.aws_eks_cluster.cluster_sg.vpc_config[0].cluster_security_group_id]
-    security_groups = []
+    security_groups = [data.aws_security_group.eks.id, data.aws_eks_cluster.cluster_sg.vpc_config[0].cluster_security_group_id]
+    #security_groups = []
   }
 
   egress {
