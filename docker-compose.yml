@@ -1,3 +1,4 @@
+# ローカル開発用Docker Composeファイル
 version: '3.8'
 services:
   nginx:
@@ -30,7 +31,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: chat-backend
-    # ポートをホストに公開しない（Nginxからのみアクセス）
     expose:
       - "3000"
     environment:
@@ -43,7 +43,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: chat-frontend
-    # ポートをホストに公開しない（Nginxからのみアクセス）
     expose:
       - "3001"
     depends_on:
