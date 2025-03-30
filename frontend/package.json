@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 3001",
-    "build": "next build",
-    "start": "next start",
+    "dev": "NODE_OPTIONS='-r newrelic' next dev --turbopack -p 3001",
+    "build": "NODE_OPTIONS='-r newrelic' next build",
+    "start": "NODE_OPTIONS='-r newrelic' next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@newrelic/next": "^0.10.0",
     "newrelic": "^12.16.1",
     "next": "15.1.7",
     "react": "^19.0.0",
