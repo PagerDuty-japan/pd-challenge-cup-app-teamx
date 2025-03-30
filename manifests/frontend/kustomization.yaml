@@ -3,13 +3,13 @@ kind: Kustomization
 
 resources:
   - deployment.yaml
-  - namespace.yaml
+  - configmap.yaml
 
 replacements:
   - source:
-      kind: Namespace
-      name: teamx
-      fieldPath: metadata.name
+      kind: ConfigMap
+      name: team
+      fieldPath: data.name
     targets:
       - select:
           kind: Deployment
