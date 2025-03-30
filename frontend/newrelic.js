@@ -46,7 +46,13 @@ exports.config = {
    */
   error_collector: {
     enabled: true,
-    ignore_status_codes: [404, 401]
+    ignore_status_codes: [404, 401],
+    capture_attributes: true,
+    capture_events: true,
+    max_event_samples_stored: 100,
+    expected_status_codes: [],
+    ignore_classes: [],
+    ignore_messages: []
   },
   
   /**
@@ -54,7 +60,14 @@ exports.config = {
    */
   browser_monitoring: {
     auto_instrument: true,
-    browser_key: process.env.NEW_RELIC_BROWSER_KEY
+    browser_key: process.env.NEW_RELIC_BROWSER_KEY,
+    debug: true,
+    capture_attributes: true,
+    capture_source: true,
+    capture_ajax: true,
+    capture_page_view: true,
+    capture_error: true,
+    capture_spa: true
   },
   
   /**

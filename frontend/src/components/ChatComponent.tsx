@@ -54,6 +54,14 @@ export default function ChatComponent() {
         socket.on('connect_error', (error) => {
           console.error('Connection error:', error);
           setIsConnected(false);
+          
+          // NewRelicにWebSocket接続エラーを報告
+          if (typeof window !== 'undefined' && window.newrelic) {
+            window.newrelic.noticeError(error, {
+              errorType: 'websocket_connect_error',
+              socketId: socket.id || 'unknown'
+            });
+          }
         });
 
         socket.on('connect', () => {
@@ -69,6 +77,13 @@ export default function ChatComponent() {
         });
       } catch (error) {
         console.error('Failed to initialize socket:', error);
+        
+        // NewRelicにソケット初期化エラーを報告
+        if (typeof window !== 'undefined' && window.newrelic) {
+          window.newrelic.noticeError(error, {
+            errorType: 'socket_initialization_error'
+          });
+        }
       }
     };
 

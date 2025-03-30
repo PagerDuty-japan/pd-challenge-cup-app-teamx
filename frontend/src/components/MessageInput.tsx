@@ -11,11 +11,40 @@ export default function MessageInput({ onSendMessage }: MessageInputProps) {
 
   const handleSubmit = () => {
     const trimmedMessage = message.trim();
-    if (trimmedMessage && trimmedMessage.length <= MAX_LENGTH) {
-      onSendMessage(trimmedMessage);
-      setMessage('');
-    } else if (trimmedMessage.length > MAX_LENGTH) {
-      alert(`メッセージは${MAX_LENGTH}文字以内で入力してください`);
+    try {
+      if (trimmedMessage && trimmedMessage.length <= MAX_LENGTH) {
+        onSendMessage(trimmedMessage);
+        setMessage('');
+        
+        // メッセージ送信イベントをNewRelicに記録
+        if (typeof window !== 'undefined' && window.newrelic) {
+          window.newrelic.addPageAction('send_message', {
+            messageLength: trimmedMessage.length
+          });
+        }
+      } else if (trimmedMessage.length > MAX_LENGTH) {
+        const error = new Error(`Message exceeds maximum length (${trimmedMessage.length}/${MAX_LENGTH})`);
+        
+        // 文字数制限エラーをNewRelicに報告
+        if (typeof window !== 'undefined' && window.newrelic) {
+          window.newrelic.noticeError(error, {
+            errorType: 'message_length_exceeded',
+            actualLength: trimmedMessage.length,
+            maxLength: MAX_LENGTH
+          });
+        }
+        
+        alert(`メッセージは${MAX_LENGTH}文字以内で入力してください`);
+      }
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      
+      // メッセージ送信エラーをNewRelicに報告
+      if (typeof window !== 'undefined' && window.newrelic) {
+        window.newrelic.noticeError(error, {
+          errorType: 'message_send_error'
+        });
+      }
     }
   };
 
