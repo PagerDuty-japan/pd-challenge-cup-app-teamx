@@ -36,19 +36,17 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push frontend image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: challenge-cup-frontend-${{ env.TEAM_NAME }}
-          IMAGE_TAG: ${{ github.sha }}
-          NEW_RELIC_APP_NAME_FRONTEND: ${{ secrets.NEW_RELIC_APP_NAME_FRONTEND }}
-          NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-          NEW_RELIC_BROWSER_KEY: ${{ secrets.NEW_RELIC_BROWSER_KEY }}
-        working-directory: ./frontend
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            ${{ steps.login-ecr.outputs.registry }}/challenge-cup-frontend-${{ env.TEAM_NAME }}:${{ github.sha }}
+            ${{ steps.login-ecr.outputs.registry }}/challenge-cup-frontend-${{ env.TEAM_NAME }}:latest
+          build-args: |
+            NEW_RELIC_APP_NAME_FRONTEND=${{ secrets.NEW_RELIC_APP_NAME_FRONTEND }}
+            NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}
+            NEW_RELIC_BROWSER_KEY=${{ secrets.NEW_RELIC_BROWSER_KEY }}
 
   build-backend:
     name: Build Backend
@@ -68,16 +66,14 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push backend image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: challenge-cup-backend-${{ env.TEAM_NAME }}
-          IMAGE_TAG: ${{ github.sha }}
-          NEW_RELIC_APP_NAME_BACKEND: ${{ secrets.NEW_RELIC_APP_NAME_BACKEND }}
-          NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-          NEW_RELIC_BROWSER_KEY: ${{ secrets.NEW_RELIC_BROWSER_KEY }}
-        working-directory: ./backend
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ${{ steps.login-ecr.outputs.registry }}/challenge-cup-backend-${{ env.TEAM_NAME }}:${{ github.sha }}
+            ${{ steps.login-ecr.outputs.registry }}/challenge-cup-backend-${{ env.TEAM_NAME }}:latest
+          build-args: |
+            NEW_RELIC_APP_NAME_BACKEND=${{ secrets.NEW_RELIC_APP_NAME_BACKEND }}
+            NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}
+            NEW_RELIC_BROWSER_KEY=${{ secrets.NEW_RELIC_BROWSER_KEY }}
