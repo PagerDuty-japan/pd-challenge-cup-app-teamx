@@ -21,3 +21,11 @@ replacements:
           name: backend
         fieldPaths:
           - metadata.namespace
+      - select:
+          kind: Deployment
+          name: backend-deployment
+        fieldPaths:
+          - spec.template.spec.containers.[name=backend].env.[name=NEW_RELIC_APP_NAME_BACKEND].value
+        options:
+          delimiter: "__TEAM__"
+          index: 1

@@ -21,3 +21,11 @@ replacements:
           name: frontend
         fieldPaths:
           - metadata.namespace
+      - select:
+          kind: Deployment
+          name: frontend-deployment
+        fieldPaths:
+          - spec.template.spec.containers.[name=frontend].env.[name=NEW_RELIC_APP_NAME_FRONTEND].value
+        options:
+          delimiter: "__TEAM__"
+          index: 1
